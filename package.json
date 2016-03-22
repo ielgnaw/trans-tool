@@ -1,0 +1,11 @@
+{
+  "name": "trans-tool",
+  "version": "0.0.1",
+  "main": "main.js",
+  "scripts": {
+    "start": "./node_modules/.bin/electron ."
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.37.2"
+  }
+}
