@@ -6,6 +6,7 @@
 var exports = module.exports;
 
 exports.init = function () {
+    console.warn($);
     // console.warn(require);
     // console.warn(require('./js/util'));
     // console.warn('init');

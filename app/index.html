@@ -5,15 +5,29 @@
         <title>Title</title>
         <link rel="stylesheet" type="text/css" href="css/index.less">
         <script src="js/env.js"></script>
-        <script>
-            if (app.env === 'electron') {
-                window.$ = window.jQuery = require('../node_modules/jquery/dist/jquery.js');
-            } else {
-                document.write('<script src="https://code.jquery.com/jquery-2.1.4.min.js"><\/script>');
-            }
-        </script>
     </head>
     <body>
-        asdasas
+        <div class="container">
+            <nav>
+                <div class="nav-item-wrapper">
+                    <a class="logo" href="#">aaa</a>
+                    <a href="#">bbb</a>
+                    <a href="#">ccc</a>
+                </div>
+            </nav>
+            <div class="code-container">
+                <div class="input-wrapper">
+                    <input type="text" placeholder="请输入待翻译的文章 URL" />
+                    <i class="iconfont icon-enter"></i>
+                </div>
+                <div id="code"></div>
+            </div>
+            <div class="handler-container"></div>
+            <div class="right-container">
+                <div class="right-panel">
+                    asdas
+                </div>
+            </div>
+        </div>
     </body>
 </html>

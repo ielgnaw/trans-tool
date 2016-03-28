@@ -35,7 +35,7 @@ app.on('ready', function () {
         // fullscreen: true
         // frame: false
     });
-    
+
     // 加载应用的 index.html
     mainWindow.loadURL('file://' + __dirname + '/app/index.html');
     // mainWindow.loadURL('http://www.baidu.com');
