@@ -17,5 +17,6 @@ else {
 
 import {readFileSync, writeFileSync} from 'fs';
 if (app.env === 'electron') {
-    console.warn(readFileSync, 123);
+    // window.$ = window.jQuery = require('./dep/jquery/1.9.1/src/jquery');
+    // document.write('<script src="js/menu.js"><\/script>');
 }

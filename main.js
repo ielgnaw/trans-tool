@@ -1,8 +1,10 @@
 var path = require('path');
 var app = require('app');  // 控制应用生命周期的模块。
 var BrowserWindow = require('browser-window');  // 创建原生浏览器窗口的模块
-var livereload = require('electron-livereload');
+// var livereload = require('electron-livereload');
+var path = require('path');
 
+var client = require('electron-connect').client;
 
 // 保持一个对于 window 对象的全局引用，不然，当 JavaScript 被 GC，
 // window 会被自动地关闭
@@ -21,24 +23,22 @@ app.on('window-all-closed', function () {
 // 这个方法就被调用
 app.on('ready', function () {
 
-    var path = require('path');
-    // Assuming this file is ./src/es6-init.js
     var appRoot = path.join(__dirname, '.');
-
-    // ...and that your main app is called ./src/main.js. This is written as if
-    // you were going to `require` the file from here.
     require('electron-compile').init(appRoot, './main');
 
     // 创建浏览器窗口。
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
-        icon: __dirname + '/app/img/favicon.ico'
+        icon: __dirname + '/app/img/favicon.ico',
+        title: '这是标题'
+        // fullscreen: true
         // frame: false
     });
-
+    
     // 加载应用的 index.html
     mainWindow.loadURL('file://' + __dirname + '/app/index.html');
+    // mainWindow.loadURL('http://www.baidu.com');
 
     // 打开开发工具
     mainWindow.openDevTools();
@@ -50,6 +50,8 @@ app.on('ready', function () {
         // 但这次不是。
         mainWindow = null;
     });
+
+    client.create(mainWindow);
 
     // livereload.client(mainWindow);
 });

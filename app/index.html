@@ -5,9 +5,15 @@
         <title>Title</title>
         <link rel="stylesheet" type="text/css" href="css/index.less">
         <script src="js/env.js"></script>
+        <script>
+            if (app.env === 'electron') {
+                window.$ = window.jQuery = require('../node_modules/jquery/dist/jquery.js');
+            } else {
+                document.write('<script src="https://code.jquery.com/jquery-2.1.4.min.js"><\/script>');
+            }
+        </script>
     </head>
     <body>
-        <div>asdasdasdsasadasdasadsasd</div>
-        <script src="js/index.js"></script>
+        asdasas
     </body>
 </html>
