@@ -2,9 +2,11 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Title</title>
+        <!-- <title>Title</title> -->
         <link rel="stylesheet" type="text/css" href="css/index.less">
-        <script src="js/env.js"></script>
+        <script>
+            window.$ = window.jQuery = require('../node_modules/jquery/dist/jquery.js');
+        </script>
     </head>
     <body>
         <div class="container">
@@ -15,12 +17,16 @@
                     <a href="#">ccc</a>
                 </div>
             </nav>
-            <div class="code-container">
+            <div class="article-container">
                 <div class="input-wrapper">
                     <input type="text" placeholder="请输入待翻译的文章 URL" />
                     <i class="iconfont icon-enter"></i>
                 </div>
-                <div id="code"></div>
+                <div class="webview-wrapper">
+                    <webview id="article-webview"></webview>
+                    <div class="loader">Loading...</div>
+                </div>
+                <div class="webview-mask"></div>
             </div>
             <div class="handler-container"></div>
             <div class="right-container">
@@ -29,5 +35,6 @@
                 </div>
             </div>
         </div>
+        <script src="js/index.js"></script>
     </body>
 </html>

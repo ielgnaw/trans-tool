@@ -31,7 +31,7 @@ app.on('ready', function () {
         width: 800,
         height: 600,
         icon: __dirname + '/app/img/favicon.ico',
-        title: '这是标题'
+        // title: '这是标题'
         // fullscreen: true
         // frame: false
     });
