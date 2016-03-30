@@ -16,9 +16,27 @@ var strUrlReg = ''
     + '((/?)|' // a slash isn't required if there is no file name
     + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
 
-var URL_REG = new RegExp(strUrlReg);
+// var URL_REG = new RegExp(strUrlReg);
+var URL_REG = /(https?|ftp):\/\/([-\w\.]+)+(:\d+)?(\/([:\(\)~\w\/_\.\,\'\#\-\=\%\@\;]*(\?\S+)?)?)?/;
+
+// var URL_PROTOCOL_REG = /(^(https?|ftp):\/\/www\.)/;
+var URL_PROTOCOL_REG = /(^(https?|ftp):)/;
 
 var exports = {};
+
+exports.URL_PROTOCOL_REG = URL_PROTOCOL_REG;
+
+/**
+ * 验证 url 是否有协议
+ *
+ * @param {string} url 待验证的 url 地址
+ *
+ * @return {boolean} 验证结果
+ */
+
+exports.hasProtocol = function (url) {
+    return URL_PROTOCOL_REG.test(url);
+};
 
 /**
  * 验证是否是合格的 url

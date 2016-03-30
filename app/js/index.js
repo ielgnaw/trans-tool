@@ -9,11 +9,13 @@ $(document).ready(function () {
 
     var inputNode = $('.input-wrapper input');
     var inputIconNode = $('.input-wrapper i');
-    var webViewNode = $('#article-webview');
+    var webViewNode = $('#article-webview')[0];
     var loaderNode = $('.loader');
     var maskNode = $('.webview-mask');
 
     var isValidURL = false;
+
+    var lastUrl = '';
 
     /**
      * 显示 loader 以及 mask
@@ -69,29 +71,37 @@ $(document).ready(function () {
      * 渲染 webView
      */
     function renderWebView() {
-        console.warn(1312321);
-        try {
         isValidURL = false;
         hideLoading();
-        webViewNode.attr('src', 'about:blank');
+        console.warn('renderWebView');
+
         var url = inputNode.val().trim();
+        if (!url) {
+            return;
+        }
+
+        if (!util.hasProtocol(url)) {
+            url = url.replace(util.URL_PROTOCOL_REG, '');
+            url = 'http://' + url;
+        }
+
+        var curUrl = webViewNode.getURL();
+        console.warn(curUrl, lastUrl, url);
+        if (curUrl.replace(/\/$/, '') === lastUrl.replace(/\/$/, '')) {
+            return;
+        }
+
+        webViewNode.src = 'about:blank';
         if (util.checkUrl(url)) {
-            console.warn(333);
             isValidURL = true;
-            webViewNode.attr('src', url);
+            webViewNode.src = url;
         }
         else {
             isValidURL = false;
-            console.warn(3123);
-            webViewNode.attr('src', ''
+            webViewNode.src = ''
                 // + 'data:text/plain,'
                 + 'data:text/html;charset=utf-8,'
-                + '<div style="color:red;">请输入合法的 URL 地址</div>'
-            );
-        }
-        }
-        catch (e) {
-            console.warn(e);
+                + '<div style="color:red;">请输入合法的 URL 地址</div>';
         }
     }
 
@@ -105,27 +115,37 @@ $(document).ready(function () {
         inputNode.on('blur', inputBlur);
         inputNode.on('keypress', inputKeypress);
 
-        webViewNode.on('did-start-loading', function (e) {
+        webViewNode.src = 'about:blank';
+
+        webViewNode.addEventListener('did-start-loading', function (e) {
+            console.warn('did-start-loading');
             if (isValidURL) {
                 showLoading();
             }
         });
 
-        // webViewNode.on('did-stop-loading', function (e) {
-        // webViewNode.on('load-commit', function (e) {
-        webViewNode.on('dom-ready', function (e) {
-            console.warn('dom-ready', e);
+        webViewNode.addEventListener('did-stop-loading', function () {
             hideLoading();
+            isValidURL = false;
         });
 
-        webViewNode.on('did-fail-load', function (e) {
-            console.warn('did-fail-load', e);
-            webViewNode.attr('src', ''
+        webViewNode.addEventListener('did-fail-load', function (e) {
+            webViewNode.src = ''
                 // + 'data:text/plain,'
                 + 'data:text/html;charset=utf-8,'
-                + '<div style="color:red;">请输入合法的 URL 地址</div>'
-            );
+                + '<div style="color:red;">请输入合法的 URL 地址</div>';
             hideLoading();
+            isValidURL = false;
+        });
+
+        webViewNode.addEventListener('ipc-message', function (e) {
+            var data = e.args[0];
+            lastUrl = data.protocol + '//' + data.host + data.pathname;
+            console.error(lastUrl);
+            console.error(data);
+            // window.location.protocol + '//' + window.location.host + window.location.pathname
+            // console.log(data.location.protocol);
+            // console.log(data.location.port);
         });
     }
 
